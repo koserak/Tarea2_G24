@@ -1,20 +1,25 @@
 import java.util.ArrayList;
 
-public class Departamento {
+public class Departamento implements Invitable {
+
     private String nombre;
-    private ArrayList<Empleado> Empleados;
+    private ArrayList<Empleado> empleados;
 
     public Departamento(String n){
         this.nombre = n;
-        Empleados = new ArrayList<>();
-    }
-
-    public int obtenerCantidadEmpleados(){
-
-        return Empleados.size();
+        empleados = new ArrayList<>();
     }
 
     public void addEmpleado(Empleado e){
-        Empleados.add(e);
+        empleados.add(e);
+    }
+
+    public int obtenerCantidadEmpleados(){
+        return empleados.size();
+    }
+
+    @Override
+    public ArrayList<Empleado> getEmpleadosInvitados() {
+        return empleados;
     }
 }
