@@ -1,30 +1,43 @@
-public class Empleado {
 
+public class Empleado implements Invitable {
     private String id;
     private String apellidos;
     private String nombre;
     private String correo;
+    private Departamento departamento;
 
-    public Empleado(String i, String n, String a, String c){
-        this.id = i;
-        this.nombre = n;
-        this.apellidos = a;
-        this.correo = c;
+
+    public Empleado(String id, String apellidos, String nombre, String correo, Departamento departamento) {
+        this.id = id;
+        this.apellidos = apellidos;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.departamento = departamento;
     }
 
-    public String getId(){
-        return id;
+
+    @Override
+    public void invitar() {
+        System.out.println("Invitación enviada a " + nombre + " " + apellidos);
     }
 
-    public String getNombre(){
-        return nombre;
-    }
+    public String getId() {
+        return id; }
 
-    public String getApellidos(){
-        return apellidos;
-    }
+    public String getApellidos() {
+        return apellidos; }
 
-    public String getCorreo(){
-        return correo;
+    public String getNombre() {
+        return nombre; }
+
+    public String getCorreo() {
+        return correo; }
+
+    public Departamento getDepartamento() {
+        return departamento; }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellidos + " (" + correo + ")";
     }
 }
