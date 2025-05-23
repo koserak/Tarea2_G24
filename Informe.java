@@ -1,5 +1,7 @@
 import java.io.*;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Informe {
     public static void generarInformeTxt(Reunion reunion, String rutaArchivo) throws IOException {
@@ -11,9 +13,20 @@ public class Informe {
             writer.write("Fecha: " + reunion.fecha.format(DateTimeFormatter.ISO_DATE) + "\n");
             writer.write("Hora prevista: " + reunion.horaPrevista + "\n");
             writer.write("Duración prevista: " + reunion.duracionPrevista.toMinutes() + " min\n");
-            writer.write("Hora de inicio real: " + reunion.horaInicio + "\n");
-            writer.write("Hora de término real: " + reunion.horaFin + "\n");
-            writer.write("Duración real: " + reunion.calcularTiempoReal() + " min\n");
+            DateTimeFormatter horaFmt = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+            String inicioFormateado = reunion.horaInicio != null
+                    ? LocalDateTime.ofInstant(reunion.horaInicio, ZoneId.systemDefault()).format(horaFmt)
+                    : "No iniciada";
+
+            String finFormateado = reunion.horaFin != null
+                    ? LocalDateTime.ofInstant(reunion.horaFin, ZoneId.systemDefault()).format(horaFmt)
+                    : "No finalizada";
+
+            writer.write("Hora de inicio real: " + inicioFormateado + "\n");
+            writer.write("Hora de término real: " + finFormateado + "\n");
+
+            writer.write("Duración real: " + reunion.calcularTiempoReal() + " segundos\n");
             writer.write("\nParticipantes: " + reunion.obtenerTotalAsistencia() + "/" + reunion.invitaciones.size() +
                     " (" + String.format("%.2f", reunion.obtenerPorcentajeAsistencia()) + "%)\n");
 
@@ -34,7 +47,7 @@ public class Informe {
 
             writer.write("\nNotas:\n");
             for (Nota n : reunion.getNotas()) {
-                writer.write(" - [" + n.getHora() + "] " + n.getContenido() + "\n");
+                writer.write(" - " + n + "\n");
             }
         }
     }

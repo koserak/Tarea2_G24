@@ -26,6 +26,12 @@ public abstract class Reunion {
         invitado.invitar();
     }
 
+    public void invitarDepartamento(Departamento departamento) {
+        for (Empleado empleado : departamento.getEmpleados()) {
+            this.invitar(empleado);
+        }
+    }
+
     public void agregarNota(String contenido) {
         notas.add(new Nota(contenido));
     }
@@ -45,6 +51,15 @@ public abstract class Reunion {
         }
         asistencias.add(new Asistencia(empleado, llegada));
     }
+
+    public void registrarAsistenciaDepartamento(Departamento departamento) {
+        for (Empleado empleado : departamento.getEmpleados()) {
+            if (invitaciones.stream().anyMatch(inv -> inv.getInvitado().equals(empleado))) {
+                registrarAsistencia(empleado);
+            }
+        }
+    }
+
 
     public List<Empleado> obtenerAsistencias() {
         List<Empleado> resultado = new ArrayList<>();
@@ -84,7 +99,7 @@ public abstract class Reunion {
 
     public float calcularTiempoReal() {
         if (horaInicio != null && horaFin != null) {
-            return Duration.between(horaInicio, horaFin).toMinutes();
+            return Duration.between(horaInicio, horaFin).toSeconds();
         }
         return 0;
     }
