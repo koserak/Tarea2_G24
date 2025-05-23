@@ -14,6 +14,13 @@ public abstract class Reunion {
     protected List<Asistencia> asistencias = new ArrayList<>();
     protected List<Retraso> retrasos = new ArrayList<>();
 
+    /**
+     *
+     * @param fecha Fecha de la Reunion.
+     * @param horaPrevista Hora de inicio estimada.
+     * @param duracionPrevista Duracion estimada de la reunion.
+     * @param organizador Empleado que crea esta reunion.
+     */
     public Reunion(LocalDate fecha, LocalTime horaPrevista, Duration duracionPrevista, Empleado organizador) {
         this.fecha = fecha;
         this.horaPrevista = horaPrevista;
