@@ -1,20 +1,29 @@
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class Departamento {
     private String nombre;
-    private ArrayList<Empleado> Empleados;
+    private List<Empleado> empleados;
 
-    public Departamento(String n){
-        this.nombre = n;
-        Empleados = new ArrayList<>();
+    public Departamento(String nombre) {
+        this.nombre = nombre;
+        this.empleados = new ArrayList<>();
     }
 
-    public int obtenerCantidadEmpleados(){
-
-        return Empleados.size();
+    public String getNombre() {
+        return nombre;
     }
 
-    public void addEmpleado(Empleado e){
-        Empleados.add(e);
+    public void agregarEmpleado(Empleado e) {
+        empleados.add(e);
+    }
+
+    public int obtenerCantidadEmpleados() {
+        return empleados.size();
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
     }
 }
