@@ -4,11 +4,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Departamento depTI = new Departamento("TI");
-        Empleado ariel = new Empleado("1", "Soto", "Ariel", "ariel@gmail.com", depTI);
+        Empleado ariel = new Empleado("1", "Fernandez", "Ariel", "ariel@gmail.com", depTI);
         Empleado juan = new Empleado("2", "Perez", "Juan", "juancito@gmail.com", depTI);
         InvitadoExterno externo = new InvitadoExterno("Maria Lopez", "mariatieneuncordero@hotmail.com");
 
-        ReunionVirtual reunion = new ReunionVirtual(LocalDate.now(), LocalTime.of(9, 0), Duration.ofMinutes(45), ariel, "https://meet.com/reunion123");
+        LocalTime horaPrevista = LocalTime.now().plusSeconds(1);
+
+        ReunionVirtual reunion = new ReunionVirtual(LocalDate.now(), horaPrevista, Duration.ofMinutes(45), ariel, "https://meet.com/123");
 
         reunion.invitar(ariel);
         reunion.invitar(juan);
@@ -22,17 +24,16 @@ public class Main {
 
         reunion.invitarDepartamento(marketing);
 
-
         reunion.iniciar();
         reunion.registrarAsistencia(ariel);
+        Thread.sleep(2000);
         reunion.registrarAsistencia(juan);
-        Thread.sleep(3000);
-
+        Thread.sleep(2000);
         reunion.registrarAsistenciaDepartamento(marketing);
         reunion.agregarNota("Inicio con presentación de Ariel.");
         Thread.sleep(3000);
         reunion.agregarNota("Juan explicó la teoría de los analfabetos.");
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         reunion.agregarNota("Maria explica estrategia para no reprobar cálculo.");
         reunion.finalizar();
 
