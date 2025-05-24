@@ -32,7 +32,7 @@ public class Main {
         reunion.agregarNota("Inicio con presentación de Ariel.");
         Thread.sleep(3000);
         reunion.agregarNota("Juan explicó la teoría de los analfabetos.");
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         reunion.agregarNota("Maria explica estrategia para no reprobar cálculo.");
         reunion.finalizar();
 
