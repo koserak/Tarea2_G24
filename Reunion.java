@@ -45,10 +45,29 @@ public abstract class Reunion {
     }
 
     public void registrarAsistencia(Empleado empleado) {
+        boolean fueInvitado = invitaciones.stream()
+                .anyMatch(inv -> inv.getInvitado().equals(empleado));
+
+        if (!fueInvitado) {
+            throw new EmpleadoNoInvitadoException("El empleado " + empleado.getNombre() + " no fue invitado.");
+        }
+
+        boolean yaAsistio = asistencias.stream()
+                .anyMatch(a -> a.getEmpleado().equals(empleado));
+
+        if (yaAsistio) {
+            throw new AsistenciaDuplicadaException("El empleado " + empleado.getNombre() + " ya fue registrado como asistente.");
+        }
+
         Instant llegada = Instant.now();
-        if (horaInicio != null && llegada.isAfter(horaInicio)) {
+        LocalDateTime fechaYHora = fecha.atTime(horaPrevista);
+        ZonedDateTime zonaHora = fechaYHora.atZone(ZoneId.systemDefault());
+        Instant horaReferencia = zonaHora.toInstant();
+
+        if (llegada.isAfter(horaReferencia)) {
             retrasos.add(new Retraso(empleado, llegada));
         }
+
         asistencias.add(new Asistencia(empleado, llegada));
     }
 
@@ -111,4 +130,9 @@ public abstract class Reunion {
 
     public Empleado getOrganizador() {
         return organizador; }
+
+    public List<Retraso> getRetrasos() {
+        return retrasos;
+    }
+
 }
