@@ -11,7 +11,6 @@ public class Retraso {
 
     public Empleado getEmpleado() {
         return empleado; }
-
     public Instant getHoraLlegada() {
         return horaLlegada; }
 }
