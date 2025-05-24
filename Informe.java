@@ -31,14 +31,17 @@ public class Informe {
                     " (" + String.format("%.2f", reunion.obtenerPorcentajeAsistencia()) + "%)\n");
 
             writer.write("\nAsistentes:\n");
+
             for (Empleado e : reunion.obtenerAsistencias()) {
                 writer.write(" - " + e + "\n");
             }
 
             writer.write("\nRetrasos:\n");
-            for (Empleado e : reunion.obtenerRetrasos()) {
-                writer.write(" - " + e + "\n");
+            for (Retraso r : reunion.getRetrasos()) {
+                String hora = LocalDateTime.ofInstant(r.getHoraLlegada(), ZoneId.systemDefault()).format(horaFmt);
+                writer.write(" - " + r.getEmpleado() + " (Llegó a las " + hora + ")\n");
             }
+
 
             writer.write("\nAusencias:\n");
             for (Invitable i : reunion.obtenerAusencias()) {
