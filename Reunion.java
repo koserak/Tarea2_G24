@@ -14,13 +14,6 @@ public abstract class Reunion {
     protected List<Asistencia> asistencias = new ArrayList<>();
     protected List<Retraso> retrasos = new ArrayList<>();
 
-    /**
-     *
-     * @param fecha Fecha de la Reunion.
-     * @param horaPrevista Hora de inicio estimada.
-     * @param duracionPrevista Duracion estimada de la reunion.
-     * @param organizador Empleado que crea esta reunion.
-     */
     public Reunion(LocalDate fecha, LocalTime horaPrevista, Duration duracionPrevista, Empleado organizador) {
         this.fecha = fecha;
         this.horaPrevista = horaPrevista;
@@ -33,6 +26,11 @@ public abstract class Reunion {
         invitado.invitar();
     }
 
+    public void invitarDepartamento(Departamento departamento) {
+        for (Empleado empleado : departamento.getEmpleados()) {
+            this.invitar(empleado);
+        }
+    }
 
     public void agregarNota(String contenido) {
         notas.add(new Nota(contenido));
@@ -53,6 +51,15 @@ public abstract class Reunion {
         }
         asistencias.add(new Asistencia(empleado, llegada));
     }
+
+    public void registrarAsistenciaDepartamento(Departamento departamento) {
+        for (Empleado empleado : departamento.getEmpleados()) {
+            if (invitaciones.stream().anyMatch(inv -> inv.getInvitado().equals(empleado))) {
+                registrarAsistencia(empleado);
+            }
+        }
+    }
+
 
     public List<Empleado> obtenerAsistencias() {
         List<Empleado> resultado = new ArrayList<>();
@@ -92,7 +99,7 @@ public abstract class Reunion {
 
     public float calcularTiempoReal() {
         if (horaInicio != null && horaFin != null) {
-            return Duration.between(horaInicio, horaFin).toMinutes();
+            return Duration.between(horaInicio, horaFin).toSeconds();
         }
         return 0;
     }
